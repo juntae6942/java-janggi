@@ -39,10 +39,7 @@ class GameRoomDaoTest {
         Long roomId = dao.save(newData);
         Optional<GameRoomData> loadedData = dao.findRoomById(roomId);
         GameRoomData data = loadedData.orElseThrow();
-        Assertions.assertThat(data.currentTurn()).isEqualTo(newData.currentTurn());
-        Assertions.assertThat(data.winner()).isEqualTo(newData.winner());
-        Assertions.assertThat(data.hanScore()).isEqualTo(newData.hanScore());
-        Assertions.assertThat(data.choScore()).isEqualTo(newData.choScore());
+        Assertions.assertThat(data).isEqualTo(newData);
     }
 
     @Test
@@ -54,9 +51,6 @@ class GameRoomDaoTest {
         dao.update(roomId, editData);
         Optional<GameRoomData> loadedData = dao.findRoomById(roomId);
         GameRoomData data = loadedData.orElseThrow();
-        Assertions.assertThat(data.currentTurn()).isEqualTo(editData.currentTurn());
-        Assertions.assertThat(data.winner()).isEqualTo(editData.winner());
-        Assertions.assertThat(data.hanScore()).isEqualTo(editData.hanScore());
-        Assertions.assertThat(data.choScore()).isEqualTo(editData.choScore());
+        Assertions.assertThat(data).isEqualTo(editData);
     }
 }

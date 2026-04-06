@@ -27,7 +27,7 @@ class PiecesDaoTest {
         dao = new PiecesDao();
         GameRoomDao roomDao = new GameRoomDao();
         GameRoomData newData = new GameRoomData("CHO", "HAN", 10, 10);
-        roomId = roomDao.save(newData);
+        roomId = roomDao.save(newData, connection);
     }
 
     @AfterEach
@@ -43,8 +43,9 @@ class PiecesDaoTest {
         List<PieceData> pieceData = List.of(
                 new PieceData("MA", "CHO", 0, 1)
         );
-        dao.save(roomId, pieceData);
-        List<PieceData> data = dao.findAllByRoomId(roomId);
+        Connection connection = ConnectionContext.getConnection();
+        dao.save(roomId, pieceData, connection);
+        List<PieceData> data = dao.findAllByRoomId(roomId, connection);
         Assertions.assertThat(data).isEqualTo(pieceData);
     }
 
@@ -54,9 +55,10 @@ class PiecesDaoTest {
         List<PieceData> pieceData = List.of(
                 new PieceData("MA", "CHO", 1, 0)
         );
-        dao.save(roomId, pieceData);
-        dao.update(roomId, 1, 0, 2, 2);
-        List<PieceData> data = dao.findAllByRoomId(roomId);
+        Connection connection = ConnectionContext.getConnection();
+        dao.save(roomId, pieceData, connection);
+        dao.update(roomId, 1, 0, 2, 2, connection);
+        List<PieceData> data = dao.findAllByRoomId(roomId, connection);
         Assertions.assertThat(data.getFirst().row()).isEqualTo(2);
         Assertions.assertThat(data.getFirst().column()).isEqualTo(2);
     }
@@ -67,9 +69,10 @@ class PiecesDaoTest {
         List<PieceData> pieceData = List.of(
                 new PieceData("MA", "CHO", 0, 1)
         );
-        dao.save(roomId, pieceData);
-        dao.delete(roomId, 0, 1);
-        List<PieceData> data = dao.findAllByRoomId(roomId);
+        Connection connection = ConnectionContext.getConnection();
+        dao.save(roomId, pieceData, connection);
+        dao.delete(roomId, 0, 1, connection);
+        List<PieceData> data = dao.findAllByRoomId(roomId, connection);
         Assertions.assertThat(data).isEmpty();
     }
 }

@@ -11,8 +11,7 @@ import java.util.Optional;
 
 public class GameRoomDao {
 
-    public Long save(GameRoomData data) {
-        Connection connection = ConnectionContext.getConnection();
+    public Long save(GameRoomData data, Connection connection) {
         String sql = "INSERT INTO game_room (current_turn, winner, cha_score, han_score) VALUES (?, ?, ?, ?)";
         try(PreparedStatement roomStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             roomStatement.setString(1, data.currentTurn());
@@ -30,8 +29,7 @@ public class GameRoomDao {
         }
     }
 
-    public void update(Long roomId, GameRoomData data) {
-        Connection connection = ConnectionContext.getConnection();
+    public void update(Long roomId, GameRoomData data, Connection connection) {
         String sql = "UPDATE game_room SET current_turn = ?, winner = ?, cha_score = ?, han_score = ? WHERE id = ?";
         try (PreparedStatement roomStatement = connection.prepareStatement(sql)) {
             roomStatement.setString(1, data.currentTurn());
@@ -45,8 +43,7 @@ public class GameRoomDao {
         }
     }
 
-    public Optional<GameRoomData> findRoomById(Long roomId) {
-        Connection connection = ConnectionContext.getConnection();
+    public Optional<GameRoomData> findRoomById(Long roomId, Connection connection) {
         String sql = "SELECT current_turn, winner, cha_score, han_score FROM game_room WHERE id=?";
         try (PreparedStatement roomStatement = connection.prepareStatement(sql)) {
             roomStatement.setLong(1, roomId);

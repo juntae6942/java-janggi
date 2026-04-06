@@ -35,9 +35,10 @@ class GameRoomDaoTest {
     @Test
     @DisplayName("게임방을 저장하면, 조회 시 게임턴과 승자, 점수가 일치 해야한다.")
     void room_save_select() {
+        Connection connection = ConnectionContext.getConnection();
         GameRoomData newData = new GameRoomData("CHO", "HAN", 10, 10);
-        Long roomId = dao.save(newData);
-        Optional<GameRoomData> loadedData = dao.findRoomById(roomId);
+        Long roomId = dao.save(newData, connection);
+        Optional<GameRoomData> loadedData = dao.findRoomById(roomId, connection);
         GameRoomData data = loadedData.orElseThrow();
         Assertions.assertThat(data).isEqualTo(newData);
     }
@@ -45,11 +46,12 @@ class GameRoomDaoTest {
     @Test
     @DisplayName("게임방 정보를 갱신하면, 조회 시 바뀐 내용이 저장되어 있어야한다.")
     void update_info() {
+        Connection connection = ConnectionContext.getConnection();
         GameRoomData newData = new GameRoomData("CHO", "HAN", 10, 10);
-        Long roomId = dao.save(newData);
+        Long roomId = dao.save(newData, connection);
         GameRoomData editData = new GameRoomData("HAN", "HAN", 0, 10);
-        dao.update(roomId, editData);
-        Optional<GameRoomData> loadedData = dao.findRoomById(roomId);
+        dao.update(roomId, editData, connection);
+        Optional<GameRoomData> loadedData = dao.findRoomById(roomId, connection);
         GameRoomData data = loadedData.orElseThrow();
         Assertions.assertThat(data).isEqualTo(editData);
     }

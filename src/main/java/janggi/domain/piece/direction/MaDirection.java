@@ -47,7 +47,9 @@ public enum MaDirection {
 
     public static MaDirection find(int directionCol, int directionRow) {
         return Arrays.stream(values())
-                .filter(dir -> dir.target.directionColumn() == directionCol && dir.target.directionRow() == directionRow)
+                .filter(dir -> dir.target.directionColumn() == directionCol &&
+                        dir.target.directionRow() == directionRow
+                )
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 마가 이동할 수 없는 방향입니다."));
     }

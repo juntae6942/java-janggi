@@ -27,17 +27,18 @@ public class JanggiGameService {
     }
 
     public GameStatusInfo getBoardStatus(long roomId) {
-        JanggiGame game = repository.loadGame(roomId);
-        return GameStatusInfo.from(
-                game.getHanScore(),
-                game.getChoScore(),
-                game.getBoardStatus()
-        );
+        return template.executeInReadOnlyTransaction(() -> {
+            JanggiGame game = repository.loadGame(roomId);
+            return GameStatusInfo.from(
+                    game.getHanScore(),
+                    game.getChoScore(),
+                    game.getBoardStatus()
+            );
+        });
     }
 
     public boolean isFinished(long roomId) {
-        return repository.loadGame(roomId)
-                    .isFinished();
+        return template.executeInReadOnlyTransaction(() -> repository.loadGame(roomId).isFinished());
     }
 
     public GameStatusInfo play(long roomId, Point from, Point to) {
@@ -51,12 +52,10 @@ public class JanggiGameService {
     }
 
     public Team winner(long roomId) {
-        return repository.loadGame(roomId)
-                        .getWinner();
+        return template.executeInReadOnlyTransaction(() -> repository.loadGame(roomId).getWinner());
     }
 
     public Team currentTurn(long roomId) {
-        return repository.loadGame(roomId)
-                        .getTeam();
+        return template.executeInReadOnlyTransaction(() -> repository.loadGame(roomId).getTeam());
     }
 }

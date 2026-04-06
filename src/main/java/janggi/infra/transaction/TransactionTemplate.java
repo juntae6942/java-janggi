@@ -20,6 +20,15 @@ public class TransactionTemplate {
         }
     }
 
+    public <T> T executeInReadOnlyTransaction(TransactionCallback<T> action) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setReadOnly(true);
+            return processTransaction(connection, action);
+        } catch (SQLException e) {
+            throw new RuntimeException("[ERROR] DB 커넥션 에러", e);
+        }
+    }
+
     private <T> T processTransaction(Connection connection, TransactionCallback<T> action) throws SQLException {
         try {
             connection.setAutoCommit(false);
@@ -34,8 +43,11 @@ public class TransactionTemplate {
             connection.rollback();
             throw new RuntimeException("[ERROR] 게임 저장 중 트랜잭션 롤백됨", e);
         } finally {
-            ConnectionContext.clear();
+            if(connection.isReadOnly()) {
+                connection.setReadOnly(false);
+            }
             connection.setAutoCommit(true);
+            ConnectionContext.clear();
         }
     }
 }

@@ -4,20 +4,16 @@ import janggi.domain.point.Point;
 
 public class CastleZone {
 
-    private final int minRow;
-    private final int maxRow;
-    private final int minColumn;
-    private final int maxColumn;
+    private final Point topLeft;
+    private final Point bottomRight;
 
     public CastleZone(Point topLeft, Point bottomRight) {
-        this.minRow = bottomRight.getRow();
-        this.maxRow = topLeft.getRow();
-        this.minColumn = topLeft.getColumn();
-        this.maxColumn = bottomRight.getColumn();
+        this.topLeft = topLeft;
+        this.bottomRight = bottomRight;
     }
 
     public boolean contains(Point target) {
-        return target.getRow() >= minRow && target.getRow() <= maxRow &&
-                target.getColumn() >= minColumn && target.getColumn() <= maxColumn;
+        return target.getRow() >= bottomRight.getRow() && target.getRow() <= topLeft.getRow() &&
+                target.getColumn() >= topLeft.getColumn() && target.getColumn() <= bottomRight.getColumn();
     }
 }

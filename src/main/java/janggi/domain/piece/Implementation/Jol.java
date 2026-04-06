@@ -3,6 +3,7 @@ package janggi.domain.piece.Implementation;
 import static java.lang.Math.abs;
 
 import janggi.domain.board.Castle;
+import janggi.domain.board.CastleZone;
 import janggi.domain.piece.Piece;
 import janggi.domain.piece.PieceType;
 import janggi.domain.piece.direction.CastleDirection;
@@ -23,7 +24,10 @@ public class Jol implements Piece {
     public Jol(Team team) {
         this.team = team;
         this.type = PieceType.JOL;
-        this.castle = new Castle();
+        this.castle = new Castle(
+                new CastleZone(Point.of(3, 9), Point.of(5, 7)),
+                new CastleZone(Point.of(3, 2), Point.of(5, 0))
+        );
     }
 
     @Override

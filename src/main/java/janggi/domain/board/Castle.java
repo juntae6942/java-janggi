@@ -4,11 +4,16 @@ import janggi.domain.point.Point;
 
 public class Castle {
 
-    private static final CastleZone HAN_CASTLE = new CastleZone(Point.of(3, 9), Point.of(5, 7));
-    private static final CastleZone CHO_CASTLE = new CastleZone(Point.of(3, 2), Point.of(5, 0));
+    private final CastleZone hanCastle;
+    private final CastleZone choCastle;
+
+    public Castle(CastleZone hanCastle, CastleZone choCastle ) {
+        this.hanCastle = hanCastle;
+        this.choCastle = choCastle;
+    }
 
     public boolean inSameCastle(Point from, Point to) {
-        return (HAN_CASTLE.contains(from) && HAN_CASTLE.contains(to)) ||
-                (CHO_CASTLE.contains(from) && CHO_CASTLE.contains(to));
+        return (hanCastle.contains(from) && hanCastle.contains(to)) ||
+                (choCastle.contains(from) && choCastle.contains(to));
     }
 }

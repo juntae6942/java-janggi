@@ -73,19 +73,22 @@
 
 ```mermaid
 classDiagram
-  Piece <|.. Ma
-  Piece <|.. Cha
-  Piece <|.. Pho
-  Piece <|.. Sang
-  Piece <|.. Jang
-  Piece <|.. Sa
-  Piece <|.. Jol
-  Board -- Piece
-  GameTurn .. HanTurn
-  GameTurn .. ChoTurn
-  GameTurn .. FinishedGame
-  JanggiGame -- GameTurn
-  JanggiGame -- Board
+    Piece <|..AbstractFixedStepPiece
+    Piece <|..AbstractNormalPiece
+    Piece <|..AbstractStraightPiece
+    AbstractFixedStepPiece <|.. Ma
+    AbstractFixedStepPiece <|.. Sang
+    AbstractStraightPiece <|.. Cha
+    AbstractStraightPiece <|.. Pho
+    AbstractNormalPiece <|.. Jang
+    AbstractNormalPiece <|.. Sa
+    Piece <|.. Jol
+    Board -- Piece
+    GameTurn .. HanTurn
+    GameTurn .. ChoTurn
+    GameTurn .. FinishedGame
+    JanggiGame -- GameTurn
+    JanggiGame -- Board
   
   class Point {
 	  int x
@@ -97,6 +100,36 @@ classDiagram
 	  isSameTeam(Team team)
 	  getRoute(Point from, Point to)
 	  canMove(List<Piece> route)
+  }
+  class Ma {
+      getRoutePoint(Point from, Point to)
+  }
+  class Sang {
+      getRoutePoint(Point from, Point to)
+  }
+  class Cha {
+      Castle castle
+      getRoutePoint(Point from, Point to) 
+  }
+  class Jang {
+      Castle castle
+      getRoutePoint(Point from, Point to)
+  }
+  class Sa {
+      Castle castle
+      getRoutePoint(Point from, Point to)
+  }
+  class Pho {
+      Castle castle
+      getRoutePoint(Point from, Point to)
+  }
+  class Castle {
+      CastleZone hanCastle
+      CastleZone choCastle
+  }
+  class CastleZone {
+      Point topLeft
+      Point bottomRight
   }
   class Board {
 	  Map~Point, Piece~ state

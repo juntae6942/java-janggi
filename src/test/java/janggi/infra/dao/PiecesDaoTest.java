@@ -45,11 +45,7 @@ class PiecesDaoTest {
         );
         dao.save(roomId, pieceData);
         List<PieceData> data = dao.findAllByRoomId(roomId);
-        Assertions.assertThat(data.getFirst()).isNotNull();
-        Assertions.assertThat(data.getFirst().pieceName()).isEqualTo("MA");
-        Assertions.assertThat(data.getFirst().teamName()).isEqualTo("CHO");
-        Assertions.assertThat(data.getFirst().row()).isEqualTo(0);
-        Assertions.assertThat(data.getFirst().column()).isEqualTo(1);
+        Assertions.assertThat(data).isEqualTo(pieceData);
     }
 
     @Test

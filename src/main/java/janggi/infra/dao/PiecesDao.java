@@ -1,7 +1,6 @@
 package janggi.infra.dao;
 
 import janggi.infra.dto.PieceData;
-import janggi.infra.transaction.ConnectionContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

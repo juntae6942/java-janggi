@@ -19,10 +19,10 @@ public abstract class AbstractStraightPiece implements Piece {
     private final PieceType type;
     private final Castle castle;
 
-    public AbstractStraightPiece(Team team, PieceType type, Castle castle) {
+    public AbstractStraightPiece(Team team, PieceType type) {
         this.team = team;
         this.type = type;
-        this.castle = castle;
+        this.castle = Castle.valueOf(team.name());
     }
 
     @Override

@@ -24,10 +24,7 @@ public class Jol implements Piece {
     public Jol(Team team) {
         this.team = team;
         this.type = PieceType.JOL;
-        this.castle = new Castle(
-                new CastleZone(Point.of(3, 9), Point.of(5, 7)),
-                new CastleZone(Point.of(3, 2), Point.of(5, 0))
-        );
+        this.castle = Castle.valueOf(team.name());
     }
 
     @Override

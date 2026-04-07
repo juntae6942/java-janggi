@@ -2,18 +2,24 @@ package janggi.domain.board;
 
 import janggi.domain.point.Point;
 
-public class Castle {
+public enum Castle {
 
-    private final CastleZone hanCastle;
-    private final CastleZone choCastle;
+    HAN(new CastleZone(Point.of(3, 9), Point.of(5, 7))),
+    CHO(new CastleZone(Point.of(3, 2), Point.of(5, 0))),
+    ;
 
-    public Castle(CastleZone hanCastle, CastleZone choCastle ) {
-        this.hanCastle = hanCastle;
-        this.choCastle = choCastle;
+    private final CastleZone zone;
+
+    Castle(CastleZone zone) {
+        this.zone = zone;
+    }
+
+    public boolean contains(Point target) {
+        return zone.contains(target);
     }
 
     public boolean inSameCastle(Point from, Point to) {
-        return (hanCastle.contains(from) && hanCastle.contains(to)) ||
-                (choCastle.contains(from) && choCastle.contains(to));
+        return (HAN.contains(from) && HAN.contains(to)) ||
+                (CHO.contains(from) && CHO.contains(to));
     }
 }

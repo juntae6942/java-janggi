@@ -1,8 +1,8 @@
 package janggi.domain.piece.direction;
 
-import java.util.Arrays;
+import java.util.List;
 
-public enum MaDirection {
+public enum MaDirection implements Direction{
     UP_LEFT(
         new Offset(-1, -2),
         new Offset(0, -1)
@@ -38,23 +38,20 @@ public enum MaDirection {
     ;
 
     private final Offset target;
-    private final Offset route;
+    private final Offset routes;
 
     MaDirection(Offset target, Offset route) {
         this.target = target;
-        this.route = route;
+        this.routes = route;
     }
 
-    public static MaDirection find(int directionCol, int directionRow) {
-        return Arrays.stream(values())
-                .filter(dir -> dir.target.directionColumn() == directionCol &&
-                        dir.target.directionRow() == directionRow
-                )
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 마가 이동할 수 없는 방향입니다."));
+    @Override
+    public Offset getTarget() {
+        return this.target;
     }
 
-    public Offset getWaypoint() {
-        return route;
+    @Override
+    public List<Offset> getWaypoints() {
+        return List.of(routes);
     }
 }

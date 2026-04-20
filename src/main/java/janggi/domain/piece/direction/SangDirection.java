@@ -1,9 +1,8 @@
 package janggi.domain.piece.direction;
 
-import java.util.Arrays;
 import java.util.List;
 
-public enum SangDirection {
+public enum SangDirection implements Direction {
     UP_LEFT(
         new Offset(-2, -3),
         List.of(
@@ -70,14 +69,12 @@ public enum SangDirection {
         this.routes = routes;
     }
 
-    public static SangDirection find(int directionCol, int directionRow) {
-        return Arrays.stream(values())
-                .filter(dir -> dir.target.directionColumn() == directionCol
-                        && dir.target.directionRow() == directionRow)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 상이 이동할 수 없는 방향입니다."));
+    @Override
+    public Offset getTarget() {
+        return this.target;
     }
 
+    @Override
     public List<Offset> getWaypoints() {
         return routes;
     }

@@ -1,6 +1,7 @@
 package janggi.domain.piece.Implementation;
 
 import janggi.domain.piece.PieceType;
+import janggi.domain.piece.direction.Direction;
 import janggi.domain.piece.direction.Offset;
 import janggi.domain.piece.direction.SangDirection;
 import janggi.domain.piece.template.AbstractFixedStepPiece;
@@ -21,7 +22,7 @@ public class Sang extends AbstractFixedStepPiece {
         int pathCol = to.calculatePathColumn(from);
         int pathRow = to.calculatePathRow(from);
 
-        SangDirection direction = SangDirection.find(pathCol, pathRow);
+        Direction direction = Direction.find(SangDirection.class, pathCol, pathRow, "[ERROR] 상이 이동할 수 없는 방향입니다.");
 
         List<Point> points = new ArrayList<>();
         for (Offset offset : direction.getWaypoints()) {
